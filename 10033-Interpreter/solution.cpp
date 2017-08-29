@@ -1,31 +1,49 @@
 #include <string>
 #include <vector>
+#include <sstream>
 #include <iostream>
+
+void debug(int ip, const std::vector<int>& regs, const std::vector<int>& memory)
+{
+    std::cout << "\nip: " << ip << std::endl;
+
+    std::cout << "\nregs" << std::endl;
+    for(size_t i = 0; i < regs.size(); i++) {
+        std::cout << i << ": " << regs[i] << std::endl;
+    }
+
+    std::cout << "\nmemory" << std::endl;
+    for(size_t i = 0; i < 20; i++) {
+        std::cout << i << ": " << memory[i] << std::endl;
+    }
+}
 
 void simulate()
 {
-    std::string skip;
-    std::getline(std::cin, skip);
-    std::getline(std::cin, skip);
-
     int ip = 0;
     std::vector<int> regs(10, 0);
     std::vector<int> memory(1000, 0);
 
-    for (int i = 0; std::cin.peek() != '\n' && !std::cin.eof(); i++) {
-        std::cin >> memory[i];
-        char c; std::cin >> c;
+    for (int i = 0; !std::cin.eof(); i++) {
+        std::string buffer;
+        std::getline(std::cin, buffer);
+        if(buffer.empty()) {
+            break;
+        }
+        memory[i] = std::stoi(buffer);
     }
 
-    int counter = 0;
+    //debug(ip, regs, memory);
+
+    int counter = 1;
     for(; true; counter++) {
         int inst = memory[ip];
-
-        std::cout << "ip: " << ip << std::endl;
 
         if(100 == inst) {
             break;
         }
+
+        ip++;
 
         const int cmd = inst / 100;
         const int op1 = inst % 100 / 10;
@@ -93,7 +111,7 @@ void simulate()
             break;
         }
 
-        ip++;
+        //debug(ip, regs, memory);
     }
 
     std::cout << counter << std::endl;
@@ -103,10 +121,19 @@ int main()
 {
     std::ios::sync_with_stdio(false);
 
-    int count;
-    std::cin >> count;
+    std::string buffer;
+    std::getline(std::cin, buffer);
 
-    simulate();
+    int count = std::stoi(buffer);
+
+    std::getline(std::cin, buffer);
+
+    for(int i = 0; i < count; i++) {
+        simulate();
+        if(i != count - 1) {
+            std::cout << std::endl;
+        }
+    }
 
     return 0;
 }
