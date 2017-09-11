@@ -105,10 +105,10 @@ int main()
 
             case 'K':
             {
-                int X1; int X2; int Y1; int Y2; char C;
+                int X1; int Y1; int X2; int Y2; char C;
                 std::cin >> X1;
-                std::cin >> X2;
                 std::cin >> Y1;
+                std::cin >> X2;
                 std::cin >> Y2;
                 std::cin >> C;
 
