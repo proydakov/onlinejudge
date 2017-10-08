@@ -1,0 +1,11 @@
+graph graphname {
+    guanabarabay;
+    downtown;
+    botanicgarden;
+    colombo;
+    sambodromo;
+    guanabarabay -- sambodromo;
+    downtown -- sambodromo;
+    sambodromo -- botanicgarden;
+    colombo -- sambodromo;
+}
